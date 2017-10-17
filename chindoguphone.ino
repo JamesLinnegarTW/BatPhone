@@ -21,26 +21,38 @@ void setup() {
 }
 
 void loop() {
-
-  int dialing = digitalRead(dialingPin);
-
   dialPulse.sample();
-  //Serial.print(dialPulse.count());
+  waitForDial(handleDialled);
+  delay(30);
+}
+
+void handleDialled() {
+  int digit = countToDigit(dialPulse.count());
+  
+  Serial.print(digit);    
+  dialPulse.reset();
+}
+
+int countToDigit(int count) {
+  if (count > 9){
+    return 0;
+  }
+  return count;  
+}
+
+void waitForDial(void (*onDialled)(void)) {
+  int dialing = digitalRead(dialingPin);
+  
   if(isPressed(dialing)) {
     if(!numberDialled){
-      int count = dialPulse.count();
-      if(count > 9){
-        count = 0;
-      }
-      Serial.print(count);
+      onDialled();
       numberDialled = true;
-      dialPulse.reset();
     }
   } else {
     numberDialled = false;
   }
-  lastButtonState = dialing;
-  delay(30);
+  
+  lastButtonState = dialing;  
 }
 
 bool isPressed(int currentState) {

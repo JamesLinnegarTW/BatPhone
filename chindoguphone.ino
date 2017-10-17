@@ -7,11 +7,12 @@ int ledState = HIGH;
 int lastButtonState = 0;
 int buttonCount = 0;
 bool outputNumber = false;
-
+Pulse dialPulse = Pulse();
 
 
 void setup() {
   // put your setup code here, to run once:
+  dialPulse.init(10);
   pinMode(pulsePin, INPUT);
   pinMode(dialingPin, INPUT);
 

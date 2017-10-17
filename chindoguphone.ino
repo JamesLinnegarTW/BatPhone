@@ -2,6 +2,7 @@ const int buttonPin = 2;
 const int ledPin = 13;
 
 int ledState = HIGH;
+int lastButtonState = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -16,6 +17,10 @@ void setup() {
 void loop() {
 
   int reading = digitalRead(buttonPin);
-  Serial.println(reading);
+
   digitalWrite(ledPin, reading);
+  if(lastButtonState != reading) {
+    Serial.println(reading);
+    lastButtonState = reading;
+  }
 }

@@ -5,8 +5,7 @@ const int dialingPin = 3;
 
 int ledState = HIGH;
 int lastButtonState = 0;
-int buttonCount = 0;
-bool outputNumber = false;
+bool numberDialled = false;
 Pulse dialPulse = Pulse();
 
 
@@ -28,19 +27,17 @@ void loop() {
   dialPulse.sample();
   //Serial.print(dialPulse.count());
   if(isPressed(dialing)) {
-    if(!outputNumber){
+    if(!numberDialled){
       int count = dialPulse.count();
       if(count > 9){
         count = 0;
       }
       Serial.print(count);
-      buttonCount = 0;
-      outputNumber = true;
+      numberDialled = true;
       dialPulse.reset();
-      
     }
   } else {
-    outputNumber = false;
+    numberDialled = false;
   }
   lastButtonState = dialing;
   delay(30);

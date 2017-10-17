@@ -12,8 +12,8 @@ Pulse dialPulse = Pulse();
 
 void setup() {
   // put your setup code here, to run once:
-  dialPulse.init(10);
-  pinMode(pulsePin, INPUT);
+  dialPulse.init(pulsePin);
+  
   pinMode(dialingPin, INPUT);
 
   while (!Serial); // wait for serial
@@ -23,48 +23,37 @@ void setup() {
 
 void loop() {
 
-  int pulse = digitalRead(pulsePin);
-
   int dialing = digitalRead(dialingPin);
 
-  incrementIfChanged(pulse);
+  dialPulse.sample();
+  //Serial.print(dialPulse.count());
   if(isPressed(dialing)) {
     if(!outputNumber){
-      if(buttonCount == 10){
-        buttonCount = 0;
+      int count = dialPulse.count();
+      if(count > 9){
+        count = 0;
       }
-        
-      Serial.print(buttonCount);
+      Serial.print(count);
       buttonCount = 0;
       outputNumber = true;
+      dialPulse.reset();
       
     }
   } else {
     outputNumber = false;
   }
+  lastButtonState = dialing;
   delay(30);
-}
-
-void incrementIfChanged(int currentState) {
-  int lastState = lastButtonState;
-  
-  if(lastState != currentState) {
-    if(currentState == LOW){
-      buttonCount++;
-    }
-    
-    lastButtonState = currentState;
-  }
 }
 
 bool isPressed(int currentState) {
   int lastState = lastButtonState;
-  
+
   if(lastState != currentState) {
     if(currentState == LOW){
       return true;
     }
   }
-
+  
   return false;
 }

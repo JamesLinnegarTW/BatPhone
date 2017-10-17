@@ -1,4 +1,4 @@
-#include "Pulse.h"
+#include "Pin.h"
 
 const int pulsePin = 2;
 const int dialingPin = 3;
@@ -6,7 +6,7 @@ const int dialingPin = 3;
 int ledState = HIGH;
 int lastButtonState = 0;
 bool numberDialled = false;
-Pulse dialPulse = Pulse();
+Pin dialPulse = Pin();
 
 
 void setup() {

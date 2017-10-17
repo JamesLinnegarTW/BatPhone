@@ -1,11 +1,11 @@
-#ifndef PULSE_H
-#define PULSE_H
+#ifndef PIN_H
+#define PIN_H
 
 #include "Arduino.h"
 
-class Pulse {
+class Pin {
  public:
-  Pulse(void);
+  Pin(void);
   void init(int pinNumber);
   void sample();
   int count();

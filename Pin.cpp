@@ -1,15 +1,15 @@
-#include "Pulse.h"
+#include "Pin.h"
 #include "Arduino.h"
 
-Pulse::Pulse(void){}
+Pin::Pin(void){}
 
-void Pulse::init(int pinNumber){
+void Pin::init(int pinNumber){
   this->pinNumber = pinNumber;
   this->lastState = 0;
   pinMode(pinNumber, INPUT);
 }
 
-void Pulse::incrementIfChanged(int currentState) {
+void Pin::incrementIfChanged(int currentState) {
   if(this->lastState != currentState) {
     if(currentState == LOW){
       this->pressCount++;
@@ -20,17 +20,17 @@ void Pulse::incrementIfChanged(int currentState) {
 }
 
 
-void Pulse::sample() {
+void Pin::sample() {
   int reading = digitalRead(this->pinNumber);
   incrementIfChanged(reading);
 }
 
 
-int Pulse::count() {
+int Pin::count() {
   return this->pressCount;
 }
 
-void Pulse::reset() {
+void Pin::reset() {
   this->pressCount = 0;
 }
 

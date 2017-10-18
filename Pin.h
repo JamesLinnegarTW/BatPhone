@@ -14,7 +14,12 @@ class Pin {
  private:
   int pinNumber;
   int lastState;
+  int trueState;
   int pressCount;
+  long lastStateChangeTime;
+  int debounceDelay;
+
+  int getState();
   void incrementIfChanged(int currentState);
 };
 #endif

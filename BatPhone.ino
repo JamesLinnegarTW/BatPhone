@@ -7,10 +7,11 @@ int ledState = HIGH;
 int lastButtonState = 0;
 bool numberDialled = false;
 Pin dialPulse = Pin();
-
+char phoneNumber[11];
 
 void setup() {
   // put your setup code here, to run once:
+  
   dialPulse.init(pulsePin);
   
   pinMode(dialingPin, INPUT);
@@ -23,12 +24,12 @@ void setup() {
 void loop() {
   dialPulse.sample();
   waitForDial(handleDialled);
-  delay(30);
+  delay(10);
 }
 
 void handleDialled() {
   int digit = countToDigit(dialPulse.count());
-  
+  phoneNumber[0] = (char) digit;
   Serial.print(digit);    
   dialPulse.reset();
 }
@@ -56,12 +57,14 @@ void waitForDial(void (*onDialled)(void)) {
 }
 
 bool isPressed(int currentState) {
+  
   int lastState = lastButtonState;
 
   if(lastState != currentState) {
+    
     if(currentState == LOW){
       return true;
-    }
+    } 
   }
   
   return false;
